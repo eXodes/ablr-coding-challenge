@@ -1,6 +1,7 @@
 import { FC, Fragment, ReactNode, useState } from "react";
 import { Dialog, Popover, Transition } from "@headlessui/react";
 import { MenuIcon, SearchIcon, ShoppingBagIcon, XIcon } from "@heroicons/react/outline";
+import { CurrencySelector } from "@/components/shared/CurrencySelector";
 
 const navigation = {
     pages: [
@@ -73,7 +74,7 @@ export const Layout: FC<ContainerProps> = ({ children }) => {
                                 </div>
 
                                 <div className="border-t border-gray-200 py-6 px-4">
-                                    <span>SGD</span>
+                                    <CurrencySelector />
                                 </div>
                             </div>
                         </Transition.Child>
@@ -130,7 +131,7 @@ export const Layout: FC<ContainerProps> = ({ children }) => {
 
                                 <div className="flex flex-1 items-center justify-end">
                                     <span className="hidden text-gray-700 hover:text-gray-800 lg:flex lg:items-center">
-                                        <span>SGD</span>
+                                        <CurrencySelector />
                                     </span>
 
                                     {/* Cart */}

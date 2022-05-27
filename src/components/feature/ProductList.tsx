@@ -1,3 +1,6 @@
+import { currencyFormatter } from "@/utils";
+import { useCurrencyContext } from "@/context/currency";
+
 const products = [
     {
         id: 1,
@@ -56,6 +59,9 @@ const products = [
 ];
 
 export const ProductList = () => {
+    const { defaultCurrency } = useCurrencyContext();
+    const format = currencyFormatter(defaultCurrency);
+
     return (
         <>
             <div className="mt-8 grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
@@ -81,7 +87,7 @@ export const ProductList = () => {
                                     className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black opacity-50"
                                 />
                                 <p className="relative text-lg font-semibold text-white">
-                                    {product.price}
+                                    {format(product.price)}
                                 </p>
                             </div>
                         </div>
