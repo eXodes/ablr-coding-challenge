@@ -5,3 +5,7 @@
 #root {
     @apply min-h-full;
 }
+
+.fi::before {
+    content: "";
+}
