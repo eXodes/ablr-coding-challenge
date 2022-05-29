@@ -36,7 +36,7 @@ export const checkout = async ({
 }) => {
     const checkoutUrl = import.meta.env.DEV
         ? `/api/checkout?currency=${currency.id}`
-        : `/checkout?currency=${currency.id}`;
+        : `/.netlify/functions/checkout?currency=${currency.id}`;
 
     try {
         const response = await fetch(checkoutUrl, {
