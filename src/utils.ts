@@ -34,8 +34,12 @@ export const checkout = async ({
     price?: number;
     currency: CurrencyState;
 }) => {
+    const checkoutUrl = import.meta.env.DEV
+        ? `/api/checkout?currency=${currency.id}`
+        : `/checkout?currency=${currency.id}`;
+
     try {
-        const response = await fetch(`/api/checkout?currency=${currency.id}`, {
+        const response = await fetch(checkoutUrl, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

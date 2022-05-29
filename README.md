@@ -37,6 +37,21 @@ We will look at your project and assess it for:
 Github is the preferred option (a public repo is fine) but we will also accept a .zip file if
 necessary.
 
-### Sample work
+## How to run development
 
-You may refer to our Demo store https://demo.ablr.com for reference.
+**Prerequisites**
+
+1. Install Netlify CLI: https://www.netlify.com/docs/cli
+2. Duplicate the `.env.example` file to `.env` and update the values.
+
+Run the following commands to install the dependencies:
+
+```bash
+npm install
+```
+
+Run the following command to serve locally:
+
+```bash
+netlify dev
+```
