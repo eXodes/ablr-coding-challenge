@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { currencyFormatter } from "@/utils";
 import { useCurrencyContext } from "@/context/currency";
 
@@ -59,8 +60,8 @@ const products = [
 ];
 
 export const ProductList = () => {
-    const { defaultCurrency } = useCurrencyContext();
-    const format = currencyFormatter(defaultCurrency);
+    const [currency] = useCurrencyContext();
+    const format = useCallback((price: number) => currencyFormatter(price, currency), [currency]);
 
     return (
         <>
@@ -92,12 +93,12 @@ export const ProductList = () => {
                             </div>
                         </div>
                         <div className="mt-6">
-                            <a
-                                href={product.href}
-                                className="relative flex items-center justify-center rounded-md border border-transparent bg-gray-100 py-2 px-8 text-sm font-medium text-gray-900 hover:bg-gray-200"
+                            <button
+                                onClick={() => setSelectedProduct(product.id)}
+                                className="relative flex w-full items-center justify-center rounded-md border border-transparent bg-gray-100 py-2 px-8 text-sm font-medium text-gray-900 hover:bg-gray-200"
                             >
-                                Add to bag<span className="sr-only">, {product.name}</span>
-                            </a>
+                                View<span className="sr-only">, {product.name}</span>
+                            </button>
                         </div>
                     </div>
                 ))}

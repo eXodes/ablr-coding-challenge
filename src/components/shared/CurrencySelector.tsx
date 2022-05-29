@@ -2,25 +2,26 @@ import { FC, Fragment } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
 import { classNames } from "@/utils";
-import { CurrencyData, useCurrencyContext } from "@/context/currency";
+import { currencies, CurrencyState, useCurrencyContext } from "@/context/currency";
+import { ActionTypes } from "@/context/currency/currencyReducer";
 
 type CurrencySelectorProps = {
     className?: string;
     placeholder?: string;
-    onSelect?: (option: CurrencyData) => void;
+    onSelect?: (option: CurrencyState) => void;
 };
 
 export const CurrencySelector: FC<CurrencySelectorProps> = ({ className, onSelect }) => {
-    const { currencies, defaultCurrency, setDefaultCurrency } = useCurrencyContext();
+    const [currency, dispatch] = useCurrencyContext();
 
-    const handleSelect = (option: CurrencyData) => {
-        setDefaultCurrency(option);
+    const handleSelect = (option: CurrencyState) => {
+        dispatch({ type: ActionTypes.SET_CURRENCY, payload: option });
         onSelect?.(option);
     };
 
     return (
         <div className={className}>
-            <Listbox value={defaultCurrency} onChange={handleSelect}>
+            <Listbox value={currency} onChange={handleSelect}>
                 {({ open }) => (
                     <>
                         <Listbox.Label className="sr-only">Change currency</Listbox.Label>
@@ -29,16 +30,11 @@ export const CurrencySelector: FC<CurrencySelectorProps> = ({ className, onSelec
                                 <span className="flex items-center">
                                     <span className="h-6 w-6 flex-shrink-0 overflow-hidden rounded-full">
                                         <span
-                                            className={classNames(
-                                                "h-6 w-8",
-                                                defaultCurrency.iconClass
-                                            )}
+                                            className={classNames("h-6 w-8", currency.iconClass)}
                                         ></span>
                                     </span>
 
-                                    <span className="ml-3 block truncate">
-                                        {defaultCurrency.id}
-                                    </span>
+                                    <span className="ml-3 block truncate">{currency.id}</span>
                                 </span>
                                 <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
                                     <SelectorIcon
