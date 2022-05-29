@@ -1,3 +1,4 @@
+import { Outlet } from "react-router-dom";
 import { CurrencyProvider } from "@/context/currency";
 import CartProvider from "@/context/cart";
 import { Layout } from "@/components/shared/Layout";
@@ -10,6 +11,7 @@ const App = () => {
                 <ShoppingCart />
 
                 <Layout>
+                    <Outlet />
                 </Layout>
             </CartProvider>
         </CurrencyProvider>
