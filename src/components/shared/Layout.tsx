@@ -1,13 +1,13 @@
 import { FC, Fragment, ReactNode, useState } from "react";
+import { Link } from "react-router-dom";
 import { Dialog, Popover, Transition } from "@headlessui/react";
 import { MenuIcon, SearchIcon, ShoppingBagIcon, XIcon } from "@heroicons/react/outline";
+import { useCartContext } from "@/context/cart";
+import { ActionTypes } from "@/context/cart/cartReducer";
 import { CurrencySelector } from "@/components/shared/CurrencySelector";
 
 const navigation = {
-    pages: [
-        { name: "Products", href: "/" },
-        { name: "Checkout", href: "#" },
-    ],
+    pages: [{ name: "Products", href: "/" }],
 };
 
 type ContainerProps = {
@@ -15,6 +15,7 @@ type ContainerProps = {
 };
 
 export const Layout: FC<ContainerProps> = ({ children }) => {
+    const [{ items }, dispatch] = useCartContext();
     const [open, setOpen] = useState(false);
 
     return (
@@ -63,12 +64,12 @@ export const Layout: FC<ContainerProps> = ({ children }) => {
                                 <div className="space-y-6 border-t border-gray-200 py-6 px-4">
                                     {navigation.pages.map((page) => (
                                         <div key={page.name} className="flow-root">
-                                            <a
-                                                href={page.href}
+                                            <Link
+                                                to={page.href}
                                                 className="-m-2 block p-2 font-medium text-gray-900"
                                             >
                                                 {page.name}
-                                            </a>
+                                            </Link>
                                         </div>
                                     ))}
                                 </div>
@@ -108,13 +109,13 @@ export const Layout: FC<ContainerProps> = ({ children }) => {
                                 <Popover.Group className="hidden lg:block lg:flex-1 lg:self-stretch">
                                     <div className="flex h-full space-x-8">
                                         {navigation.pages.map((page) => (
-                                            <a
+                                            <Link
                                                 key={page.name}
-                                                href={page.href}
+                                                to={page.href}
                                                 className="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
                                             >
                                                 {page.name}
-                                            </a>
+                                            </Link>
                                         ))}
                                     </div>
                                 </Popover.Group>
@@ -134,18 +135,25 @@ export const Layout: FC<ContainerProps> = ({ children }) => {
                                         <CurrencySelector />
                                     </span>
 
-                                    {/* Cart */}
-                                    <div className="ml-4 flow-root lg:ml-6">
-                                        <a href="#" className="group -m-2 flex items-center p-2">
+                                    <div className="ml-4 flow-root lg:ml-8">
+                                        <button
+                                            onClick={() =>
+                                                dispatch({
+                                                    type: ActionTypes.SHOW_CART,
+                                                    payload: true,
+                                                })
+                                            }
+                                            className="group -m-2 flex items-center p-2"
+                                        >
                                             <ShoppingBagIcon
-                                                className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                                                className="h-6 w-6 flex-shrink-0 text-gray-500"
                                                 aria-hidden="true"
                                             />
-                                            <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                                                0
+                                            <span className="ml-2 text-sm font-medium text-gray-700">
+                                                {items.length}
                                             </span>
                                             <span className="sr-only">items in cart, view bag</span>
-                                        </a>
+                                        </button>
                                     </div>
                                 </div>
                             </div>

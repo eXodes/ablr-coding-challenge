@@ -1,17 +1,19 @@
-import { Layout } from "@/components/shared/Layout";
-import { Container } from "@/components/shared/Container";
 import { CurrencyProvider } from "@/context/currency";
+import CartProvider from "@/context/cart";
+import { Layout } from "@/components/shared/Layout";
+import { ShoppingCart } from "@/components/feature/ShoppingCart";
 
-function App() {
+const App = () => {
     return (
         <CurrencyProvider>
-            <Layout>
-                <Container>
-                    <></>
-                </Container>
-            </Layout>
+            <CartProvider>
+                <ShoppingCart />
+
+                <Layout>
+                </Layout>
+            </CartProvider>
         </CurrencyProvider>
     );
-}
+};
 
 export default App;
