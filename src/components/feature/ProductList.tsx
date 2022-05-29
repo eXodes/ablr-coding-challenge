@@ -1,65 +1,11 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { currencyFormatter } from "@/utils";
 import { useCurrencyContext } from "@/context/currency";
-
-const products = [
-    {
-        id: 1,
-        name: "Leica M3",
-        color: "Silver",
-        href: "#",
-        imageSrc: "https://images.unsplash.com/photo-1610811132115-b86887c118fd",
-        imageAlt: "Leica M3 in silver",
-        price: 3123,
-    },
-    {
-        id: 2,
-        name: "RayBan Aviator",
-        color: "Black",
-        href: "#",
-        imageSrc: "https://images.unsplash.com/photo-1572635196237-14b3f281503f",
-        imageAlt: "RayBan Aviator with a black color on the back",
-        price: 247.99,
-    },
-    {
-        id: 3,
-        name: "Xbox One X Controller",
-        color: "White and black",
-        href: "#",
-        imageSrc: "https://images.unsplash.com/photo-1600080972464-8e5f35f63d08",
-        imageAlt: "Xbox One X Controller with a white and black color on the back",
-        price: 209,
-    },
-    {
-        id: 4,
-        name: "Airpods",
-        color: "White",
-        href: "#",
-        imageSrc: "https://images.unsplash.com/photo-1504274066651-8d31a536b11a",
-        imageAlt: "Airpods with a white color on the back",
-        price: 169,
-    },
-    {
-        id: 5,
-        name: "Rolleiflex",
-        color: "Black",
-        href: "#",
-        imageSrc: "https://images.unsplash.com/photo-1495121553079-4c61bcce1894",
-        imageAlt: "Rolleiflex with a black color on the back",
-        price: 329,
-    },
-    {
-        id: 6,
-        name: "Cooking pan",
-        color: "Black",
-        href: "#",
-        imageSrc: "https://images.unsplash.com/photo-1592156328697-079f6ee0cfa5",
-        imageAlt: "Cooking pan with a black color on the back",
-        price: 45,
-    },
-];
+import { useProducts } from "@/hooks/products";
 
 export const ProductList = () => {
+    const [products] = useProducts();
+
     const [currency] = useCurrencyContext();
     const format = useCallback((price: number) => currencyFormatter(price, currency), [currency]);
 
