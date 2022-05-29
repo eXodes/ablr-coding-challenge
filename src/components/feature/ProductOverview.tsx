@@ -1,7 +1,7 @@
 import { FC, useCallback, useEffect, useState } from "react";
 import { ProductData, useProducts } from "@/hooks/products";
 import { useCurrencyContext } from "@/context/currency";
-import { currencyFormatter } from "@/utils";
+import { checkout, currencyFormatter } from "@/utils";
 import { LightningBoltIcon } from "@heroicons/react/solid";
 import { Link } from "react-router-dom";
 
@@ -19,6 +19,15 @@ export const ProductOverview: FC<ProductDetailsProps> = ({ id }) => {
     useEffect(() => {
         if (id) setProduct(getById(id));
     }, [id, getById]);
+
+    const handleCheckout = async () => {
+        const data = await checkout({
+            price: product?.price,
+            currency,
+        });
+
+        window.location.href = data ? data?.checkout_url : "";
+    };
 
     return (
         <>
@@ -59,7 +68,10 @@ export const ProductOverview: FC<ProductDetailsProps> = ({ id }) => {
 
                             <div>
                                 <div className="mt-6">
-                                    <button className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50">
+                                    <button
+                                        className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
+                                        onClick={handleCheckout}
+                                    >
                                         <LightningBoltIcon className="mr-2 h-5 w-5" />
                                         Checkout with Ablr
                                     </button>

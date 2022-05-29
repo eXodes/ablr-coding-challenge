@@ -1,19 +1,30 @@
 import { FC, useCallback, useEffect, useState } from "react";
 import { LightningBoltIcon } from "@heroicons/react/solid";
-import { currencyFormatter } from "@/utils";
-import { useParams } from "react-router-dom";
+import { checkout, currencyFormatter } from "@/utils";
 import { ProductData, useProducts } from "@/hooks/products";
 import { useCurrencyContext } from "@/context/currency";
 import { useCartContext } from "@/context/cart";
 import { ActionTypes } from "@/context/cart/cartReducer";
 
-export const ProductDetails: FC = () => {
-    const { id } = useParams<{ id: string }>();
+interface ProductDetailsProps {
+    id: string;
+}
+
+export const ProductDetails: FC<ProductDetailsProps> = ({ id }) => {
     const [, { getById }] = useProducts();
     const [product, setProduct] = useState<ProductData | undefined>(undefined);
     const [currency] = useCurrencyContext();
     const format = useCallback((price: number) => currencyFormatter(price, currency), [currency]);
     const [, dispatch] = useCartContext();
+
+    const handleCheckout = async () => {
+        const data = await checkout({
+            price: product?.price,
+            currency,
+        });
+
+        window.location.href = data ? data?.checkout_url : "";
+    };
 
     useEffect(() => {
         if (id) setProduct(getById(parseInt(id)));
@@ -58,6 +69,7 @@ export const ProductDetails: FC = () => {
                                     <button
                                         type="button"
                                         className="flex max-w-xs flex-1 items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50 sm:w-full"
+                                        onClick={handleCheckout}
                                     >
                                         <LightningBoltIcon className="mr-2 h-5 w-5" />
                                         Checkout with Ablr

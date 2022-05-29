@@ -1,3 +1,10 @@
+export type ApiResponse<T> = {
+    success: true;
+    data: T;
+    message: null;
+    errors: null;
+};
+
 export type CheckoutData = {
     id: string;
     checkout_url: string;

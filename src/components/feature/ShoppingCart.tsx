@@ -5,7 +5,7 @@ import { LightningBoltIcon } from "@heroicons/react/solid";
 import { useCartContext } from "@/context/cart";
 import { ActionTypes } from "@/context/cart/cartReducer";
 import { useCurrencyContext } from "@/context/currency";
-import { classNames, currencyFormatter } from "@/utils";
+import { checkout, classNames, currencyFormatter } from "@/utils";
 
 export const ShoppingCart: FC = () => {
     const [{ items, total, isOpen }, dispatch] = useCartContext();
@@ -17,6 +17,15 @@ export const ShoppingCart: FC = () => {
         () => dispatch({ type: ActionTypes.SHOW_CART, payload: false }),
         [dispatch]
     );
+
+    const handleCheckout = async () => {
+        const data = await checkout({
+            price: total,
+            currency,
+        });
+
+        window.location.href = data ? data?.checkout_url : "";
+    };
 
     return (
         <Transition.Root show={isOpen} as={Fragment}>
@@ -156,6 +165,7 @@ export const ShoppingCart: FC = () => {
                                                         ? "hover:bg-indigo-700"
                                                         : "cursor-not-allowed"
                                                 )}
+                                                onClick={handleCheckout}
                                                 disabled={items.length === 0}
                                             >
                                                 <LightningBoltIcon className="mr-2 h-5 w-5" />

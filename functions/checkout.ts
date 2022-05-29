@@ -1,17 +1,10 @@
 import { Handler } from "@netlify/functions";
 import fetch, { Response } from "node-fetch";
-import { CheckoutData } from "@/types";
+import { ApiResponse, CheckoutData } from "@/types";
 import { formattedResponse } from "@/utils";
 
 const { BASE_URL, ABLR_API_URL, SG_STORE_ID, MY_STORE_ID, SG_SECRET_KEY, MY_SECRET_KEY } =
     process.env;
-
-type ApiResponse = {
-    success: true;
-    data: CheckoutData;
-    message: null;
-    errors: null;
-};
 
 const handler: Handler = async (event) => {
     if (event.httpMethod !== "POST") {
@@ -45,9 +38,6 @@ const handler: Handler = async (event) => {
         });
     }
 
-    const checkoutUrl = `${ABLR_API_URL}/public/merchant/checkout/`;
-    const redirectUrl = `${BASE_URL}/order`;
-
     if (!event.body) {
         return formattedResponse(400, {
             message: "Missing required body.",
@@ -55,6 +45,9 @@ const handler: Handler = async (event) => {
     }
 
     const body = JSON.parse(event.body) as { amount: string };
+
+    const checkoutUrl = `${ABLR_API_URL}/public/merchant/checkout/`;
+    const redirectUrl = `${BASE_URL}/order?amount=${body.amount}&currency=${currency}`;
 
     try {
         const response: Response = await fetch(checkoutUrl, {
@@ -76,7 +69,7 @@ const handler: Handler = async (event) => {
             });
         }
 
-        const { data } = (await response.json()) as ApiResponse;
+        const { data } = (await response.json()) as ApiResponse<CheckoutData>;
 
         return formattedResponse(200, data);
     } catch (error) {
