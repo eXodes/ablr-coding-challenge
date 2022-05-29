@@ -7,6 +7,7 @@ import "./index.css";
 import App from "@/App";
 import { Products } from "@/routes/Products";
 import { Product } from "@/routes/Product";
+import { NotFound } from "@/routes/NotFound";
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 ReactDOM.createRoot(document.getElementById("root")!).render(
@@ -16,6 +17,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
                 <Route path="/" element={<App />}>
                     <Route index element={<Products />} />
                     <Route path="products/:id" element={<Product />} />
+                    <Route path="*" element={<NotFound />} />
                 </Route>
             </Routes>
         </BrowserRouter>
