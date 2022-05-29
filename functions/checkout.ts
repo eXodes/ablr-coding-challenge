@@ -1,6 +1,7 @@
 import { Handler } from "@netlify/functions";
 import fetch, { Response } from "node-fetch";
 import { CheckoutData } from "@/types";
+import { formattedResponse } from "@/utils";
 
 const { BASE_URL, ABLR_API_URL, SG_STORE_ID, MY_STORE_ID, SG_SECRET_KEY, MY_SECRET_KEY } =
     process.env;
@@ -14,12 +15,9 @@ type ApiResponse = {
 
 const handler: Handler = async (event) => {
     if (event.httpMethod !== "POST") {
-        return {
-            statusCode: 405,
-            body: JSON.stringify({
-                message: "Method not allowed.",
-            }),
-        };
+        return formattedResponse(405, {
+            message: "Method not allowed.",
+        });
     }
 
     const currency = event.queryStringParameters?.currency;
@@ -36,39 +34,29 @@ const handler: Handler = async (event) => {
             secretKey = MY_SECRET_KEY;
             break;
         default:
-            return {
-                statusCode: 400,
-                body: JSON.stringify({
-                    error: "Invalid currency.",
-                }),
-            };
+            return formattedResponse(400, {
+                message: "Invalid currency.",
+            });
     }
 
     if (!BASE_URL || !ABLR_API_URL || !storeId || !secretKey) {
-        return {
-            statusCode: 400,
-            body: JSON.stringify({
-                error: "Missing required environment variables.",
-            }),
-        };
+        return formattedResponse(400, {
+            message: "Missing required environment variables.",
+        });
     }
 
     const checkoutUrl = `${ABLR_API_URL}/public/merchant/checkout/`;
     const redirectUrl = `${BASE_URL}/order`;
 
     if (!event.body) {
-        return {
-            statusCode: 400,
-            body: JSON.stringify({
-                error: "Missing required body.",
-            }),
-        };
+        return formattedResponse(400, {
+            message: "Missing required body.",
+        });
     }
 
     const body = JSON.parse(event.body) as { amount: string };
 
     try {
-        console.log({ storeId, secretKey, url: checkoutUrl, body });
         const response: Response = await fetch(checkoutUrl, {
             method: "POST",
             headers: {
@@ -83,25 +71,16 @@ const handler: Handler = async (event) => {
         });
 
         if (!response.ok) {
-            return {
-                statusCode: 500,
-                body: JSON.stringify({
-                    error: "Error while processing request.",
-                }),
-            };
+            return formattedResponse(500, {
+                message: "Error while processing request.",
+            });
         }
 
         const { data } = (await response.json()) as ApiResponse;
 
-        return {
-            statusCode: 200,
-            body: JSON.stringify(data),
-        };
+        return formattedResponse(200, data);
     } catch (error) {
-        return {
-            statusCode: 422,
-            body: JSON.stringify(error),
-        };
+        return formattedResponse(422, error);
     }
 };
 

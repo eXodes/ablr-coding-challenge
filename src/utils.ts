@@ -14,3 +14,14 @@ export const currencyFormatter = (value: number, currency: CurrencyState): strin
         minimumFractionDigits: currency.decimal,
     }).format(convertedValue);
 };
+
+export const formattedResponse = (statusCode: number, body: unknown) => {
+    return {
+        statusCode,
+        headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify(body),
+    };
+};

@@ -6,6 +6,13 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
     server: {
         port: 4000,
+        proxy: {
+            "/api": {
+                target: "http://localhost:8080/.netlify/functions",
+                changeOrigin: true,
+                rewrite: (path) => path.replace(/^\/api/, ""),
+            },
+        },
     },
     resolve: {
         alias: {

@@ -35,7 +35,8 @@
         "tailwind.config.js",
         "postcss.config.js",
         "index.css",
-        "README.md"
+        "README.md",
+        "netlify.toml"
     ],
     "rules": {
         "prettier/prettier": "error",
