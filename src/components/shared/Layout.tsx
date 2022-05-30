@@ -121,7 +121,7 @@ export const Layout: FC<ContainerProps> = ({ children }) => {
                                 </Popover.Group>
 
                                 {/* Logo */}
-                                <a href="#" className="flex">
+                                <a href="/" className="flex">
                                     <span className="sr-only">Workflow</span>
                                     <img
                                         className="h-8 w-auto"
