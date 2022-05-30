@@ -65,7 +65,7 @@ const handler: Handler = async (event) => {
 
         if (!response.ok) {
             return formattedResponse(500, {
-                message: "Error while processing request.",
+                message: response.statusText || "Error while processing request.",
             });
         }
 
