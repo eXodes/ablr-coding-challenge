@@ -1,5 +1,6 @@
 import { CurrencyState } from "@/context/currency";
 import { CheckoutData } from "@/types";
+import { endpointUrl } from "@/constants";
 
 export const classNames = (...classes: (string | number | boolean | undefined)[]): string => {
     return classes.filter(Boolean).join(" ");
@@ -34,9 +35,9 @@ export const checkout = async ({
     price?: number;
     currency: CurrencyState;
 }) => {
-    const checkoutUrl = import.meta.env.DEV
-        ? `/api/checkout?currency=${currency.id}`
-        : `/.netlify/functions/checkout?currency=${currency.id}`;
+    const checkoutUrl = `${endpointUrl}/checkout?currency=${currency.id}`;
+
+    console.log("checkoutUrl", checkoutUrl);
 
     try {
         const response = await fetch(checkoutUrl, {
