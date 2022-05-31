@@ -1,7 +1,7 @@
 import { FC, useCallback, useEffect, useState } from "react";
 import { LightningBoltIcon } from "@heroicons/react/solid";
 import { checkout, currencyFormatter } from "@/utils";
-import { ProductData, useProducts } from "@/hooks/products";
+import { ProductData, useProducts } from "@/hooks/useProducts";
 import { useCurrencyContext } from "@/context/currency";
 import { useCartContext } from "@/context/cart";
 import { ActionTypes } from "@/context/cart/cartReducer";
@@ -46,7 +46,10 @@ export const ProductDetails: FC<ProductDetailsProps> = ({ id }) => {
 
                         {/* Product info */}
                         <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
-                            <h1 className="text-3xl font-extrabold tracking-tight text-gray-900">
+                            <h1
+                                className="text-3xl font-extrabold tracking-tight text-gray-900"
+                                data-testid="product-name"
+                            >
                                 {product.name}
                             </h1>
 
@@ -93,7 +96,7 @@ export const ProductDetails: FC<ProductDetailsProps> = ({ id }) => {
                     </div>
                 </div>
             ) : (
-                <div>Loading...</div>
+                <div>Product doesn&apos;t exist.</div>
             )}
         </div>
     );

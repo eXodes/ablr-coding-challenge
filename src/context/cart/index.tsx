@@ -8,7 +8,7 @@ import {
     useReducer,
 } from "react";
 import { Action, cartReducer } from "@/context/cart/cartReducer";
-import { ProductData } from "@/hooks/products";
+import { ProductData } from "@/hooks/useProducts";
 
 export type CartProductData = ProductData & {
     quantity: number;

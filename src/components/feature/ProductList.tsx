@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import { currencyFormatter } from "@/utils";
 import { useCurrencyContext } from "@/context/currency";
 import { Modal } from "@/components/shared/Modal";
-import { useProducts } from "@/hooks/products";
+import { useProducts } from "@/hooks/useProducts";
 import { ProductOverview } from "@/components/feature/ProductOverview";
 
 export const ProductList = () => {
@@ -17,7 +17,10 @@ export const ProductList = () => {
             <Modal isOpen={!!selectedProduct} onClose={() => setSelectedProduct(undefined)}>
                 <ProductOverview id={selectedProduct} />
             </Modal>
-            <div className="mt-8 grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
+            <div
+                className="mt-8 grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8"
+                data-testid="product-list"
+            >
                 {products.map((product) => (
                     <div key={product.id}>
                         <div className="relative">

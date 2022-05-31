@@ -1,5 +1,5 @@
 import { FC, useCallback, useEffect, useState } from "react";
-import { ProductData, useProducts } from "@/hooks/products";
+import { ProductData, useProducts } from "@/hooks/useProducts";
 import { useCurrencyContext } from "@/context/currency";
 import { checkout, currencyFormatter } from "@/utils";
 import { LightningBoltIcon } from "@heroicons/react/solid";
@@ -32,7 +32,10 @@ export const ProductOverview: FC<ProductDetailsProps> = ({ id }) => {
     return (
         <>
             {product ? (
-                <div className="grid w-full grid-cols-1 items-start gap-y-8 gap-x-6 sm:grid-cols-12 lg:gap-x-8">
+                <div
+                    className="grid w-full grid-cols-1 items-start gap-y-8 gap-x-6 sm:grid-cols-12 lg:gap-x-8"
+                    data-testid="product-overview"
+                >
                     <div className="sm:col-span-4 lg:col-span-5">
                         <div className="aspect-square overflow-hidden rounded-lg bg-gray-100">
                             <img

@@ -1,4 +1,4 @@
-import { ProductData } from "@/hooks/products";
+import { ProductData } from "@/hooks/useProducts";
 import { CartState } from "@/context/cart";
 
 export enum ActionTypes {
