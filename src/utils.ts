@@ -37,8 +37,6 @@ export const checkout = async ({
 }) => {
     const checkoutUrl = `${endpointUrl}/checkout?currency=${currency.id}`;
 
-    console.log("checkoutUrl", checkoutUrl);
-
     try {
         const response = await fetch(checkoutUrl, {
             method: "POST",
