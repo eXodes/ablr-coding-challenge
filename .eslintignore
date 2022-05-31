@@ -1,2 +1,11 @@
 node_modules
 dist
+.eslintrc.json
+tsconfig.json
+package.json
+vite.config.ts
+tailwind.config.js
+postcss.config.js
+index.css
+README.md
+netlify.toml

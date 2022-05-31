@@ -27,17 +27,7 @@
             "version": "detect"
         }
     },
-    "ignorePatterns": [
-        ".eslintrc.json",
-        "tsconfig.json",
-        "package.json",
-        "vite.config.ts",
-        "tailwind.config.js",
-        "postcss.config.js",
-        "index.css",
-        "README.md",
-        "netlify.toml"
-    ],
+    "ignorePatterns": [],
     "rules": {
         "prettier/prettier": "error",
         "react/react-in-jsx-scope": "off",
