@@ -37,12 +37,12 @@ We will look at your project and assess it for:
 Github is the preferred option (a public repo is fine) but we will also accept a .zip file if
 necessary.
 
-## How to run development
+## How to run development mode
 
 **Prerequisites**
 
 1. Install Netlify CLI: https://www.netlify.com/docs/cli
-2. Duplicate the `.env.example` file to `.env` and update the values.
+2. Duplicate the `.env.example` file to `.env.local` and update the values.
 
 Run the following commands to install the dependencies:
 

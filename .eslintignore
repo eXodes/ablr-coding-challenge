@@ -9,3 +9,4 @@ postcss.config.js
 index.css
 README.md
 netlify.toml
+setup.ts
