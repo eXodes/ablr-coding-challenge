@@ -4,7 +4,7 @@ import { Dialog, Popover, Transition } from "@headlessui/react";
 import { MenuIcon, SearchIcon, ShoppingBagIcon, XIcon } from "@heroicons/react/outline";
 import { useCartContext } from "@/context/cart";
 import { ActionTypes } from "@/context/cart/cartReducer";
-import { CurrencySelector } from "@/components/shared/CurrencySelector";
+import { CurrencySelector } from "@/components/feature/CurrencySelector";
 
 const navigation = {
     pages: [{ name: "Products", href: "/" }],
