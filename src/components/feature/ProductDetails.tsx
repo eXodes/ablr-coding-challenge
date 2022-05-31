@@ -33,7 +33,10 @@ export const ProductDetails: FC<ProductDetailsProps> = ({ id }) => {
     return (
         <div className="bg-white">
             {product ? (
-                <div className="mx-auto max-w-2xl py-16 sm:py-24 lg:max-w-7xl">
+                <div
+                    className="mx-auto max-w-2xl py-16 sm:py-24 lg:max-w-7xl"
+                    data-testid="product-details"
+                >
                     <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-x-8">
                         {/* Image gallery */}
                         <div className="aspect-square w-full">

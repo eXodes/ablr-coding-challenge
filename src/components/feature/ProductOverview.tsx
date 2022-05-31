@@ -46,7 +46,10 @@ export const ProductOverview: FC<ProductDetailsProps> = ({ id }) => {
                         </div>
                     </div>
                     <div className="sm:col-span-8 lg:col-span-7">
-                        <h2 className="text-2xl font-extrabold text-gray-900 sm:pr-12">
+                        <h2
+                            className="text-2xl font-extrabold text-gray-900 sm:pr-12"
+                            data-testid="product-name"
+                        >
                             {product?.name}
                         </h2>
 
