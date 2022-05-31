@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { CurrencyProvider } from "@/context/currency";
+import CurrencyProvider from "@/context/currency";
 import CartProvider from "@/context/cart";
 import { Layout } from "@/components/shared/Layout";
 import { ShoppingCart } from "@/components/feature/ShoppingCart";

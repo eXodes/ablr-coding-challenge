@@ -38,7 +38,7 @@ type CurrencyProviderProps = {
     children: ReactNode;
 };
 
-export const CurrencyProvider: FC<CurrencyProviderProps> = ({ children }) => {
+const CurrencyProvider: FC<CurrencyProviderProps> = ({ children }) => {
     const [state, dispatch] = useReducer(currencyReducer, currencies[0]);
     const [searchParams] = useSearchParams();
 
@@ -63,3 +63,5 @@ export const CurrencyProvider: FC<CurrencyProviderProps> = ({ children }) => {
 };
 
 export const useCurrencyContext = () => useContext(CurrencyContext);
+
+export default CurrencyProvider;
