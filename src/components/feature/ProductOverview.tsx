@@ -1,6 +1,6 @@
 import { FC, useCallback, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { LightningBoltIcon, XCircleIcon } from "@heroicons/react/solid";
+import { LightningBoltIcon } from "@heroicons/react/solid";
 import { useCurrencyContext } from "@/context/currency";
 import { ProductData, useProducts } from "@/hooks/useProducts";
 import { ErrorAlert } from "@/components/shared/ErrorAlert";
@@ -80,18 +80,7 @@ export const ProductOverview: FC<ProductDetailsProps> = ({ id }) => {
                                 Action buttons
                             </span>
 
-                            {error && (
-                                <ErrorAlert
-                                    icon={
-                                        <XCircleIcon
-                                            className="h-5 w-5 text-red-400"
-                                            aria-hidden="true"
-                                        />
-                                    }
-                                >
-                                    {error.message}
-                                </ErrorAlert>
-                            )}
+                            {error && <ErrorAlert>{error.message}</ErrorAlert>}
 
                             <div>
                                 <div className="mt-6">

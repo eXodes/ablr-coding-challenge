@@ -1,7 +1,7 @@
 import { FC, Fragment, useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Dialog, Transition } from "@headlessui/react";
-import { LightningBoltIcon, XCircleIcon } from "@heroicons/react/solid";
+import { LightningBoltIcon } from "@heroicons/react/solid";
 import { XIcon } from "@heroicons/react/outline";
 import { useCartContext } from "@/context/cart";
 import { ActionTypes } from "@/context/cart/cartReducer";
@@ -169,16 +169,7 @@ export const ShoppingCart: FC = () => {
 
                                         {error && (
                                             <div className="mt-6">
-                                                <ErrorAlert
-                                                    icon={
-                                                        <XCircleIcon
-                                                            className="h-5 w-5 text-red-400"
-                                                            aria-hidden="true"
-                                                        />
-                                                    }
-                                                >
-                                                    {error.message}
-                                                </ErrorAlert>
+                                                <ErrorAlert>{error.message}</ErrorAlert>
                                             </div>
                                         )}
 
