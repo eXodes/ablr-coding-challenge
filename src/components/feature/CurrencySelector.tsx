@@ -1,23 +1,25 @@
-import { FC, Fragment } from "react";
+import { FC, Fragment, useCallback } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
-import { classNames } from "@/utils";
 import { currencies, CurrencyState, useCurrencyContext } from "@/context/currency";
 import { ActionTypes } from "@/context/currency/currencyReducer";
+import { classNames } from "@/utils";
 
 type CurrencySelectorProps = {
     className?: string;
-    placeholder?: string;
     onSelect?: (option: CurrencyState) => void;
 };
 
 export const CurrencySelector: FC<CurrencySelectorProps> = ({ className, onSelect }) => {
     const [currency, dispatch] = useCurrencyContext();
 
-    const handleSelect = (option: CurrencyState) => {
-        dispatch({ type: ActionTypes.SET_CURRENCY, payload: option });
-        onSelect?.(option);
-    };
+    const handleSelect = useCallback(
+        (option: CurrencyState) => {
+            dispatch({ type: ActionTypes.SET_CURRENCY, payload: option });
+            onSelect?.(option);
+        },
+        [dispatch, onSelect]
+    );
 
     return (
         <div className={className}>
@@ -31,7 +33,7 @@ export const CurrencySelector: FC<CurrencySelectorProps> = ({ className, onSelec
                                     <span className="h-6 w-6 flex-shrink-0 overflow-hidden rounded-full">
                                         <span
                                             className={classNames("h-6 w-8", currency.iconClass)}
-                                        ></span>
+                                        />
                                     </span>
 
                                     <span className="ml-3 block truncate">{currency.id}</span>
@@ -74,7 +76,7 @@ export const CurrencySelector: FC<CurrencySelectorProps> = ({ className, onSelec
                                                                     "h-6 w-8",
                                                                     currency.iconClass
                                                                 )}
-                                                            ></span>
+                                                            />
                                                         </span>
                                                         <span
                                                             className={classNames(
