@@ -1,5 +1,5 @@
 import { FC, ReactNode } from "react";
-import { classNames } from "@/utils";
+import { classNames } from "@/libs/utils";
 
 type ContainerProps = {
     className?: string;

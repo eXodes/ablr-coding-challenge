@@ -1,6 +1,6 @@
 import { CurrencyState } from "@/context/currency";
 import { endpointUrl } from "@/constants";
-import { CheckoutData } from "@/types";
+import { CheckoutData } from "@/libs/types";
 
 export const classNames = (...classes: (string | number | boolean | undefined)[]): string => {
     return classes.filter(Boolean).join(" ");

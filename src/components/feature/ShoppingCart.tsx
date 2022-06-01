@@ -7,7 +7,7 @@ import { useCartContext } from "@/context/cart";
 import { ActionTypes } from "@/context/cart/cartReducer";
 import { useCurrencyContext } from "@/context/currency";
 import { ErrorAlert } from "@/components/shared/ErrorAlert";
-import { checkout, classNames, currencyFormatter } from "@/utils";
+import { checkout, classNames, currencyFormatter } from "@/libs/utils";
 
 export const ShoppingCart: FC = () => {
     const [{ items, total, isOpen }, dispatch] = useCartContext();

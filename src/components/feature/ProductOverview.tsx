@@ -4,7 +4,7 @@ import { LightningBoltIcon, XCircleIcon } from "@heroicons/react/solid";
 import { useCurrencyContext } from "@/context/currency";
 import { ProductData, useProducts } from "@/hooks/useProducts";
 import { ErrorAlert } from "@/components/shared/ErrorAlert";
-import { checkout, currencyFormatter } from "@/utils";
+import { checkout, currencyFormatter } from "@/libs/utils";
 
 interface ProductDetailsProps {
     id?: number;

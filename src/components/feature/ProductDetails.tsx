@@ -6,7 +6,7 @@ import { useCartContext } from "@/context/cart";
 import { ActionTypes } from "@/context/cart/cartReducer";
 import { ProductData, useProducts } from "@/hooks/useProducts";
 import { ErrorAlert } from "@/components/shared/ErrorAlert";
-import { checkout, currencyFormatter } from "@/utils";
+import { checkout, currencyFormatter } from "@/libs/utils";
 
 interface ProductDetailsProps {
     id: string;

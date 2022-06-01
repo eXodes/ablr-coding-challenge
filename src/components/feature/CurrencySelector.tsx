@@ -3,7 +3,7 @@ import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
 import { currencies, CurrencyState, useCurrencyContext } from "@/context/currency";
 import { ActionTypes } from "@/context/currency/currencyReducer";
-import { classNames } from "@/utils";
+import { classNames } from "@/libs/utils";
 
 type CurrencySelectorProps = {
     className?: string;

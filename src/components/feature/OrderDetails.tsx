@@ -2,7 +2,7 @@ import { FC, useCallback } from "react";
 import { useCartContext } from "@/context/cart";
 import { Link } from "react-router-dom";
 import { useCurrencyContext } from "@/context/currency";
-import { currencyFormatter } from "@/utils";
+import { currencyFormatter } from "@/libs/utils";
 import { BadgeCheckIcon } from "@heroicons/react/solid";
 
 interface OrderDetailsProps {

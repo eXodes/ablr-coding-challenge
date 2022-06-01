@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { currencyFormatter } from "@/utils";
+import { currencyFormatter } from "@/libs/utils";
 import { useCurrencyContext } from "@/context/currency";
 import { Modal } from "@/components/shared/Modal";
 import { useProducts } from "@/hooks/useProducts";

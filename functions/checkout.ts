@@ -1,7 +1,7 @@
 import { Handler } from "@netlify/functions";
 import fetch, { Response } from "node-fetch";
-import { ApiResponse, CheckoutData } from "@/types";
-import { formattedResponse } from "@/utils";
+import { ApiResponse, CheckoutData } from "@/libs/types";
+import { formattedResponse } from "@/libs/utils";
 
 const { BASE_URL, ABLR_API_URL, SG_STORE_ID, MY_STORE_ID, SG_SECRET_KEY, MY_SECRET_KEY } =
     process.env;

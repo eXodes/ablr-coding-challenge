@@ -1,6 +1,6 @@
 import { FC, ReactNode } from "react";
 import { XCircleIcon } from "@heroicons/react/solid";
-import { classNames } from "@/utils";
+import { classNames } from "@/libs/utils";
 
 interface ErrorAlertProps {
     children: ReactNode;
