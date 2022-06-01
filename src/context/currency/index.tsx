@@ -1,5 +1,6 @@
-import { createContext, Dispatch, FC, ReactNode, useContext, useReducer } from "react";
-import { Action, currencyReducer } from "@/context/currency/currencyReducer";
+import { createContext, Dispatch, FC, ReactNode, useContext, useEffect, useReducer } from "react";
+import { Action, ActionTypes, currencyReducer } from "@/context/currency/currencyReducer";
+import { useSearchParams } from "react-router-dom";
 
 export type CurrencyState = {
     id: string;
@@ -39,6 +40,18 @@ type CurrencyProviderProps = {
 
 const CurrencyProvider: FC<CurrencyProviderProps> = ({ children }) => {
     const [state, dispatch] = useReducer(currencyReducer, currencies[0]);
+    const [searchParams] = useSearchParams();
+
+    useEffect(() => {
+        const currencyId = searchParams.get("currency");
+
+        if (currencyId !== state.id) {
+            const newCurrency = currencies.find((currency) => currency.id === currencyId) ?? state;
+
+            dispatch({ type: ActionTypes.SET_CURRENCY, payload: newCurrency });
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <CurrencyContext.Provider value={[state, dispatch]}>{children}</CurrencyContext.Provider>
