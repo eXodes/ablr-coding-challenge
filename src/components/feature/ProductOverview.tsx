@@ -1,33 +1,41 @@
 import { FC, useCallback, useEffect, useState } from "react";
-import { ProductData, useProducts } from "@/hooks/useProducts";
+import { Link, useNavigate } from "react-router-dom";
+import { LightningBoltIcon, XCircleIcon } from "@heroicons/react/solid";
 import { useCurrencyContext } from "@/context/currency";
+import { ProductData, useProducts } from "@/hooks/useProducts";
+import { ErrorAlert } from "@/components/shared/ErrorAlert";
 import { checkout, currencyFormatter } from "@/utils";
-import { LightningBoltIcon } from "@heroicons/react/solid";
-import { Link } from "react-router-dom";
 
 interface ProductDetailsProps {
     id?: number;
 }
 
 export const ProductOverview: FC<ProductDetailsProps> = ({ id }) => {
+    const [currency] = useCurrencyContext();
+
+    const navigate = useNavigate();
     const [, { getById }] = useProducts();
     const [product, setProduct] = useState<ProductData | undefined>(undefined);
+    const [error, setError] = useState<Error | undefined>(undefined);
 
-    const [currency] = useCurrencyContext();
     const format = useCallback((price: number) => currencyFormatter(price, currency), [currency]);
 
     useEffect(() => {
         if (id) setProduct(getById(id));
     }, [id, getById]);
 
-    const handleCheckout = async () => {
-        const data = await checkout({
-            price: product?.price,
-            currency,
-        });
+    const handleCheckout = useCallback(async () => {
+        try {
+            const data = await checkout({
+                price: product?.price,
+                currency,
+            });
 
-        window.location.href = data ? data?.checkout_url : "";
-    };
+            data && navigate(data.checkout_url);
+        } catch (error) {
+            setError(error as Error);
+        }
+    }, [currency, navigate, product?.price]);
 
     return (
         <>
@@ -67,14 +75,28 @@ export const ProductOverview: FC<ProductDetailsProps> = ({ id }) => {
                             </div>
                         </section>
 
-                        <section aria-labelledby="options-heading" className="mt-6">
-                            <h3 id="options-heading" className="sr-only">
-                                Product options
-                            </h3>
+                        <section aria-labelledby="action-buttons" className="mt-6">
+                            <span id="action-buttons" className="sr-only">
+                                Action buttons
+                            </span>
+
+                            {error && (
+                                <ErrorAlert
+                                    icon={
+                                        <XCircleIcon
+                                            className="h-5 w-5 text-red-400"
+                                            aria-hidden="true"
+                                        />
+                                    }
+                                >
+                                    {error.message}
+                                </ErrorAlert>
+                            )}
 
                             <div>
                                 <div className="mt-6">
                                     <button
+                                        type="button"
                                         className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
                                         onClick={handleCheckout}
                                     >

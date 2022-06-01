@@ -1,6 +1,6 @@
 import { CurrencyState } from "@/context/currency";
-import { CheckoutData } from "@/types";
 import { endpointUrl } from "@/constants";
+import { CheckoutData } from "@/types";
 
 export const classNames = (...classes: (string | number | boolean | undefined)[]): string => {
     return classes.filter(Boolean).join(" ");
@@ -37,19 +37,21 @@ export const checkout = async ({
 }) => {
     const checkoutUrl = `${endpointUrl}/checkout?currency=${currency.id}`;
 
-    try {
-        const response = await fetch(checkoutUrl, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                amount: price,
-            }),
-        });
+    const response = await fetch(checkoutUrl, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            amount: price,
+        }),
+    });
 
-        return (await response.json()) as CheckoutData;
-    } catch {
-        return null;
+    const data = await response.json();
+
+    if (!response.ok) {
+        throw new Error(data.message as string);
     }
+
+    return data as CheckoutData;
 };

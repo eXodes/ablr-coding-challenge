@@ -1,15 +1,20 @@
-import { FC, Fragment, useCallback } from "react";
+import { FC, Fragment, useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Dialog, Transition } from "@headlessui/react";
+import { LightningBoltIcon, XCircleIcon } from "@heroicons/react/solid";
 import { XIcon } from "@heroicons/react/outline";
-import { LightningBoltIcon } from "@heroicons/react/solid";
 import { useCartContext } from "@/context/cart";
 import { ActionTypes } from "@/context/cart/cartReducer";
 import { useCurrencyContext } from "@/context/currency";
+import { ErrorAlert } from "@/components/shared/ErrorAlert";
 import { checkout, classNames, currencyFormatter } from "@/utils";
 
 export const ShoppingCart: FC = () => {
     const [{ items, total, isOpen }, dispatch] = useCartContext();
     const [currency] = useCurrencyContext();
+
+    const navigate = useNavigate();
+    const [error, setError] = useState<Error | undefined>(undefined);
 
     const format = useCallback((price: number) => currencyFormatter(price, currency), [currency]);
 
@@ -18,14 +23,18 @@ export const ShoppingCart: FC = () => {
         [dispatch]
     );
 
-    const handleCheckout = async () => {
-        const data = await checkout({
-            price: total,
-            currency,
-        });
+    const handleCheckout = useCallback(async () => {
+        try {
+            const data = await checkout({
+                price: total,
+                currency,
+            });
 
-        window.location.href = data ? data?.checkout_url : "";
-    };
+            data && navigate(data.checkout_url);
+        } catch (error) {
+            setError(error as Error);
+        }
+    }, [currency, navigate, total]);
 
     return (
         <Transition.Root show={isOpen} as={Fragment}>
@@ -157,6 +166,22 @@ export const ShoppingCart: FC = () => {
                                             <p>Subtotal</p>
                                             <p>{format(total)}</p>
                                         </div>
+
+                                        {error && (
+                                            <div className="mt-6">
+                                                <ErrorAlert
+                                                    icon={
+                                                        <XCircleIcon
+                                                            className="h-5 w-5 text-red-400"
+                                                            aria-hidden="true"
+                                                        />
+                                                    }
+                                                >
+                                                    {error.message}
+                                                </ErrorAlert>
+                                            </div>
+                                        )}
+
                                         <div className="mt-6">
                                             <button
                                                 className={classNames(

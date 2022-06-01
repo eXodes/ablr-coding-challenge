@@ -1,30 +1,40 @@
 import { FC, useCallback, useEffect, useState } from "react";
-import { LightningBoltIcon } from "@heroicons/react/solid";
-import { checkout, currencyFormatter } from "@/utils";
-import { ProductData, useProducts } from "@/hooks/useProducts";
+import { useNavigate } from "react-router-dom";
+import { LightningBoltIcon, XCircleIcon } from "@heroicons/react/solid";
 import { useCurrencyContext } from "@/context/currency";
 import { useCartContext } from "@/context/cart";
 import { ActionTypes } from "@/context/cart/cartReducer";
+import { ProductData, useProducts } from "@/hooks/useProducts";
+import { ErrorAlert } from "@/components/shared/ErrorAlert";
+import { checkout, currencyFormatter } from "@/utils";
 
 interface ProductDetailsProps {
     id: string;
 }
 
 export const ProductDetails: FC<ProductDetailsProps> = ({ id }) => {
-    const [, { getById }] = useProducts();
-    const [product, setProduct] = useState<ProductData | undefined>(undefined);
     const [currency] = useCurrencyContext();
-    const format = useCallback((price: number) => currencyFormatter(price, currency), [currency]);
     const [, dispatch] = useCartContext();
 
-    const handleCheckout = async () => {
-        const data = await checkout({
-            price: product?.price,
-            currency,
-        });
+    const navigate = useNavigate();
+    const [, { getById }] = useProducts();
+    const [product, setProduct] = useState<ProductData | undefined>(undefined);
+    const [error, setError] = useState<Error | undefined>(undefined);
 
-        window.location.href = data ? data?.checkout_url : "";
-    };
+    const format = useCallback((price: number) => currencyFormatter(price, currency), [currency]);
+
+    const handleCheckout = useCallback(async () => {
+        try {
+            const data = await checkout({
+                price: product?.price,
+                currency,
+            });
+
+            data && navigate(data.checkout_url);
+        } catch (error) {
+            setError(error as Error);
+        }
+    }, [currency, navigate, product?.price]);
 
     useEffect(() => {
         if (id) setProduct(getById(parseInt(id)));
@@ -69,6 +79,21 @@ export const ProductDetails: FC<ProductDetailsProps> = ({ id }) => {
                                     dangerouslySetInnerHTML={{ __html: product.description }}
                                 />
                             </div>
+
+                            {error && (
+                                <div className="mt-6">
+                                    <ErrorAlert
+                                        icon={
+                                            <XCircleIcon
+                                                className="h-5 w-5 text-red-400"
+                                                aria-hidden="true"
+                                            />
+                                        }
+                                    >
+                                        {error.message}
+                                    </ErrorAlert>
+                                </div>
+                            )}
 
                             <div className="mt-6">
                                 <div className="mt-10 flex flex-row gap-2">
