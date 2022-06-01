@@ -1,5 +1,4 @@
 import { FC, useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { LightningBoltIcon } from "@heroicons/react/solid";
 import { useCurrencyContext } from "@/context/currency";
 import { useCartContext } from "@/context/cart";
@@ -16,7 +15,6 @@ export const ProductDetails: FC<ProductDetailsProps> = ({ id }) => {
     const [currency] = useCurrencyContext();
     const [, dispatch] = useCartContext();
 
-    const navigate = useNavigate();
     const [, { getById }] = useProducts();
     const [product, setProduct] = useState<ProductData | undefined>(undefined);
     const [error, setError] = useState<Error | undefined>(undefined);
@@ -25,16 +23,14 @@ export const ProductDetails: FC<ProductDetailsProps> = ({ id }) => {
 
     const handleCheckout = useCallback(async () => {
         try {
-            const data = await checkout({
+            await checkout({
                 price: product?.price,
                 currency,
             });
-
-            data && navigate(data.checkout_url);
         } catch (error) {
             setError(error as Error);
         }
-    }, [currency, navigate, product?.price]);
+    }, [currency, product?.price]);
 
     useEffect(() => {
         if (id) setProduct(getById(parseInt(id)));

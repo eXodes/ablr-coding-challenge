@@ -1,5 +1,4 @@
 import { FC, Fragment, useCallback, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Dialog, Transition } from "@headlessui/react";
 import { LightningBoltIcon } from "@heroicons/react/solid";
 import { XIcon } from "@heroicons/react/outline";
@@ -13,7 +12,6 @@ export const ShoppingCart: FC = () => {
     const [{ items, total, isOpen }, dispatch] = useCartContext();
     const [currency] = useCurrencyContext();
 
-    const navigate = useNavigate();
     const [error, setError] = useState<Error | undefined>(undefined);
 
     const format = useCallback((price: number) => currencyFormatter(price, currency), [currency]);
@@ -25,16 +23,14 @@ export const ShoppingCart: FC = () => {
 
     const handleCheckout = useCallback(async () => {
         try {
-            const data = await checkout({
+            await checkout({
                 price: total,
                 currency,
             });
-
-            data && navigate(data.checkout_url);
         } catch (error) {
             setError(error as Error);
         }
-    }, [currency, navigate, total]);
+    }, [currency, total]);
 
     return (
         <Transition.Root show={isOpen} as={Fragment}>

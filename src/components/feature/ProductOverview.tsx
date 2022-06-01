@@ -1,5 +1,5 @@
 import { FC, useCallback, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { LightningBoltIcon } from "@heroicons/react/solid";
 import { useCurrencyContext } from "@/context/currency";
 import { ProductData, useProducts } from "@/hooks/useProducts";
@@ -13,7 +13,6 @@ interface ProductDetailsProps {
 export const ProductOverview: FC<ProductDetailsProps> = ({ id }) => {
     const [currency] = useCurrencyContext();
 
-    const navigate = useNavigate();
     const [, { getById }] = useProducts();
     const [product, setProduct] = useState<ProductData | undefined>(undefined);
     const [error, setError] = useState<Error | undefined>(undefined);
@@ -26,16 +25,14 @@ export const ProductOverview: FC<ProductDetailsProps> = ({ id }) => {
 
     const handleCheckout = useCallback(async () => {
         try {
-            const data = await checkout({
+            await checkout({
                 price: product?.price,
                 currency,
             });
-
-            data && navigate(data.checkout_url);
         } catch (error) {
             setError(error as Error);
         }
-    }, [currency, navigate, product?.price]);
+    }, [currency, product?.price]);
 
     return (
         <>

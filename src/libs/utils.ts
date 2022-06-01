@@ -1,6 +1,5 @@
 import { CurrencyState } from "@/context/currency";
 import { endpointUrl } from "@/constants";
-import { CheckoutData } from "@/libs/types";
 
 export const classNames = (...classes: (string | number | boolean | undefined)[]): string => {
     return classes.filter(Boolean).join(" ");
@@ -47,11 +46,11 @@ export const checkout = async ({
         }),
     });
 
-    const data = await response.json();
+    const data = (await response.json()) as { checkout_url: string; message: string };
 
     if (!response.ok) {
-        throw new Error(data.message as string);
+        throw new Error(data.message);
     }
 
-    return data as CheckoutData;
+    window.location.href = data.checkout_url;
 };

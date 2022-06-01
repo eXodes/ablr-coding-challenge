@@ -164,7 +164,7 @@ export const Layout: FC<ContainerProps> = ({ children }) => {
                     </nav>
                 </header>
 
-                <main className="mt-16 mb-32">{children}</main>
+                <main className="mt-8 mb-32">{children}</main>
             </div>
         </>
     );

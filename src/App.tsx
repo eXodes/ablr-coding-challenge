@@ -1,13 +1,21 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useSearchParams } from "react-router-dom";
 import { withErrorBoundary, useErrorBoundary } from "react-use-error-boundary";
+import { lowerCase, upperFirst } from "lodash-es";
 import CartProvider from "@/context/cart";
 import CurrencyProvider from "@/context/currency";
 import { Layout } from "@/components/shared/Layout";
 import { ErrorAlert } from "@/components/shared/ErrorAlert";
 import { ShoppingCart } from "@/components/feature/ShoppingCart";
+import { SuccessAlert } from "@/components/shared/SuccessAlert";
+import { Container } from "@/components/shared/Container";
 
 const App = withErrorBoundary(() => {
     const [error, resetError] = useErrorBoundary();
+    const [searchParams] = useSearchParams();
+
+    const checkoutId = searchParams.get("checkout_id");
+    const orderCode = searchParams.get("order_code");
+    const orderState = searchParams.get("order_state");
 
     if (error) {
         return (
@@ -43,6 +51,26 @@ const App = withErrorBoundary(() => {
                 <ShoppingCart />
 
                 <Layout>
+                    {checkoutId && orderCode && orderState && (
+                        <Container>
+                            <SuccessAlert
+                                title={
+                                    <>
+                                        Thank you for your order. Your order number is
+                                        <strong> {orderCode}</strong>.
+                                    </>
+                                }
+                            >
+                                <p>
+                                    Your order status:{" "}
+                                    <span className="font-semibold">
+                                        {upperFirst(lowerCase(orderState))}
+                                    </span>
+                                </p>
+                            </SuccessAlert>
+                        </Container>
+                    )}
+
                     <Outlet />
                 </Layout>
             </CartProvider>

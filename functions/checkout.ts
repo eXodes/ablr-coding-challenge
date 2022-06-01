@@ -1,7 +1,7 @@
 import { Handler } from "@netlify/functions";
 import fetch, { Response } from "node-fetch";
-import { ApiResponse, CheckoutData } from "@/libs/types";
 import { formattedResponse } from "@/libs/utils";
+import { ApiResponse, CheckoutData } from "@/libs/types";
 
 const { BASE_URL, ABLR_API_URL, SG_STORE_ID, MY_STORE_ID, SG_SECRET_KEY, MY_SECRET_KEY } =
     process.env;
@@ -47,7 +47,7 @@ const handler: Handler = async (event) => {
     const body = JSON.parse(event.body) as { amount: string };
 
     const checkoutUrl = `${ABLR_API_URL}/public/merchant/checkout/`;
-    const redirectUrl = `${BASE_URL}/order?amount=${body.amount}&currency=${currency}`;
+    const redirectUrl = `${event.headers.referer as string}?currency=${currency}`;
 
     try {
         const response: Response = await fetch(checkoutUrl, {
@@ -63,15 +63,17 @@ const handler: Handler = async (event) => {
             }),
         });
 
+        const { data, message } = (await response.json()) as ApiResponse<CheckoutData>;
+
         if (!response.ok) {
             return formattedResponse(500, {
-                message: response.statusText || "Error while processing request.",
+                message: message ?? response.statusText,
             });
         }
 
-        const { data } = (await response.json()) as ApiResponse<CheckoutData>;
-
-        return formattedResponse(200, data);
+        return formattedResponse(200, {
+            checkout_url: data.checkout_url,
+        });
     } catch (error) {
         return formattedResponse(422, error);
     }
