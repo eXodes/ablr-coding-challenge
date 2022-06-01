@@ -24,8 +24,6 @@ describe("ProductDetails features", () => {
         const button = screen.getByRole("button", { name: /checkout with ablr/i });
 
         await act(async () => {
-            await userEvent.click(button);
-
             button.onclick = handleClick;
 
             await userEvent.click(button);
@@ -37,9 +35,9 @@ describe("ProductDetails features", () => {
     it.concurrent("should be able to add to cart", async () => {
         render(<ProductDetails id="1" />);
 
-        await act(async () => {
-            const button = screen.getByRole("button", { name: /add to bag/i });
+        const button = screen.getByRole("button", { name: /add to bag/i });
 
+        await act(async () => {
             button.onclick = handleClick;
 
             await userEvent.click(button);
