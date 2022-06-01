@@ -121,14 +121,14 @@ export const Layout: FC<ContainerProps> = ({ children }) => {
                                 </Popover.Group>
 
                                 {/* Logo */}
-                                <a href="/" className="flex">
+                                <Link to="/" className="flex">
                                     <span className="sr-only">Workflow</span>
                                     <img
                                         className="h-8 w-auto"
                                         src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600"
                                         alt=""
                                     />
-                                </a>
+                                </Link>
 
                                 <div className="flex flex-1 items-center justify-end">
                                     <span className="hidden text-gray-700 hover:text-gray-800 lg:flex lg:items-center">
