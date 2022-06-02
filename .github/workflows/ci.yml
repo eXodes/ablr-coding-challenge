@@ -10,6 +10,12 @@ jobs:
     test:
         name: Unit and E2E
         runs-on: ubuntu-latest
+        env:
+            ABLR_API_URL: ${{ secrets.ABLR_API_URL }}
+            MY_STORE_ID: ${{ secrets.MY_STORE_ID }}
+            MY_SECRET_KEY: ${{ secrets.MY_SECRET_KEY }}
+            SG_STORE_ID: ${{ secrets.SG_STORE_ID }}
+            SG_SECRET_KEY: ${{ secrets.SG_SECRET_KEY }}
 
         steps:
             - uses: actions/checkout@v2
