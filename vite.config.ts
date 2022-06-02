@@ -23,9 +23,15 @@ export default defineConfig({
     test: {
         globals: true,
         environment: "jsdom",
-        setupFiles: "./src/test/setup.ts",
+        setupFiles: "./setup.ts",
         coverage: {
             reporter: ["json-summary", "lcov"],
         },
+        exclude: [
+            "**/node_modules/**",
+            "**/dist/**",
+            "**/tests/**",
+            "**/.{idea,git,cache,output,temp}/**",
+        ],
     },
 });

@@ -1,5 +1,5 @@
 import { act } from "@testing-library/react";
-import { render, screen, userEvent } from "@/test/utils";
+import { render, screen, userEvent } from "@/tests/utils";
 import { ProductOverview } from "@/components/feature/ProductOverview";
 import { vi } from "vitest";
 
