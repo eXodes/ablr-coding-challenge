@@ -3,8 +3,7 @@ import fetch, { Response } from "node-fetch";
 import { formattedResponse } from "@/libs/utils";
 import { ApiResponse, CheckoutData } from "@/libs/types";
 
-const { BASE_URL, ABLR_API_URL, SG_STORE_ID, MY_STORE_ID, SG_SECRET_KEY, MY_SECRET_KEY } =
-    process.env;
+const { ABLR_API_URL, SG_STORE_ID, MY_STORE_ID, SG_SECRET_KEY, MY_SECRET_KEY } = process.env;
 
 const handler: Handler = async (event) => {
     if (event.httpMethod !== "POST") {
@@ -32,7 +31,7 @@ const handler: Handler = async (event) => {
             });
     }
 
-    if (!BASE_URL || !ABLR_API_URL || !storeId || !secretKey) {
+    if (!ABLR_API_URL || !storeId || !secretKey) {
         return formattedResponse(400, {
             message: "Missing required environment variables.",
         });
