@@ -10,3 +10,4 @@ index.css
 README.md
 netlify.toml
 setup.ts
+playwright.config.ts

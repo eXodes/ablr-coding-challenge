@@ -55,12 +55,12 @@ export const ProductDetails: FC<ProductDetailsProps> = ({ id }) => {
 
                         {/* Product info */}
                         <div className="mt-10 px-4 sm:mt-16 sm:px-0 lg:mt-0">
-                            <h1
+                            <h3
                                 className="text-3xl font-extrabold tracking-tight text-gray-900"
                                 data-testid="product-name"
                             >
                                 {product.name}
-                            </h1>
+                            </h3>
 
                             <div className="mt-3">
                                 <h2 className="sr-only">Product information</h2>

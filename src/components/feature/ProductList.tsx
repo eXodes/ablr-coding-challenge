@@ -32,7 +32,10 @@ export const ProductList = () => {
                                 />
                             </div>
                             <div className="relative mt-4">
-                                <h3 className="text-sm font-medium text-gray-900">
+                                <h3
+                                    className="text-sm font-medium text-gray-900"
+                                    data-testid="product-name"
+                                >
                                     {product.name}
                                 </h3>
                                 <p className="mt-1 text-sm text-gray-500">{product.color}</p>

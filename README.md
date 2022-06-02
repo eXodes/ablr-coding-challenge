@@ -49,7 +49,7 @@ necessary.
 Run the following commands to install the dependencies:
 
 ```bash
-npm install
+npm install --legacy-peer-deps
 ```
 
 Run the following command to serve locally:
@@ -58,8 +58,22 @@ Run the following command to serve locally:
 netlify dev
 ```
 
-## Test coverage
+## Testing
 
-| Statements                                                                                 | Branches                                                                              | Functions                                                                     | Lines                                                                            |
-| ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
-| ![Statements](https://img.shields.io/badge/statements-92.12%25-brightgreen.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-87.61%25-yellow.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-88.63%25-yellow.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-92.12%25-brightgreen.svg?style=flat) |
+Run the following command to run tests:
+
+```bash
+npm test
+```
+
+Run the following command to run e2e tests:
+
+```bash
+npm run e2e
+```
+
+### Test coverage
+
+| Statements                                                                                 | Branches                                                                          | Functions                                                                           | Lines                                                                            |
+| ------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| ![Statements](https://img.shields.io/badge/statements-92.07%25-brightgreen.svg?style=flat) | ![Branches](https://img.shields.io/badge/branches-86.72%25-yellow.svg?style=flat) | ![Functions](https://img.shields.io/badge/functions-88.63%25-yellow.svg?style=flat) | ![Lines](https://img.shields.io/badge/lines-92.07%25-brightgreen.svg?style=flat) |
