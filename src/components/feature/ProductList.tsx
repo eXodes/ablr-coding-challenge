@@ -42,7 +42,10 @@ export const ProductList = () => {
                                     aria-hidden="true"
                                     className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black opacity-50"
                                 />
-                                <p className="relative text-lg font-semibold text-white">
+                                <p
+                                    className="relative text-lg font-semibold text-white"
+                                    data-testid="product-price"
+                                >
                                     {format(product.price)}
                                 </p>
                             </div>
@@ -51,6 +54,7 @@ export const ProductList = () => {
                             <button
                                 onClick={() => setSelectedProduct(product.id)}
                                 className="relative flex w-full items-center justify-center rounded-md border border-transparent bg-gray-100 py-2 px-8 text-sm font-medium text-gray-900 hover:bg-gray-200"
+                                data-testid="view-product-overview"
                             >
                                 View<span className="sr-only">, {product.name}</span>
                             </button>
