@@ -24,5 +24,3 @@ jobs:
               run: npx playwright install --with-deps
             - name: Run tests
               run: npm run test:ci
-            - name: Run e2e tests
-              run: npm run e2e
