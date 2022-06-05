@@ -1,6 +1,7 @@
 # Ablr Coding Challenge 2022 (React only)
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/d0970efa-8fe7-4abe-a409-ffc6f2687e40/deploy-status)](https://app.netlify.com/sites/ablr-challenge/deploys)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/exodes/ablr-coding-challenge/CI)
 
 ## Overview
 
